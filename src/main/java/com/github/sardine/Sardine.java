@@ -256,6 +256,16 @@ public interface Sardine
 	 */
 	boolean exists(String url) throws IOException;
 
+    /**
+     * Performs a HTTP <code>HEAD</code> request to see if a resource exists or not,
+     * if the resource exists, return it's ContentLength.
+     *
+     * @param url Path to the resource including protocol and hostname
+     * @return Anything outside of the 200-299 response code range returns -1.
+     * @throws IOException I/O error or HTTP response validation failure
+     */
+    long getContentLength(String url) throws IOException;
+
 	/**
 	 * Put an exclusive write lock on this resource. A write lock must prevent a principal without
 	 * the lock from successfully executing a PUT, POST, PROPPATCH, LOCK, UNLOCK, MOVE, DELETE, or MKCOL

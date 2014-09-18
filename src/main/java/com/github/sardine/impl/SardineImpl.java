@@ -23,10 +23,7 @@ import com.github.sardine.DavQuota;
 import com.github.sardine.DavResource;
 import com.github.sardine.Sardine;
 import com.github.sardine.Version;
-import com.github.sardine.impl.handler.ExistsResponseHandler;
-import com.github.sardine.impl.handler.LockResponseHandler;
-import com.github.sardine.impl.handler.MultiStatusResponseHandler;
-import com.github.sardine.impl.handler.VoidResponseHandler;
+import com.github.sardine.impl.handler.*;
 import com.github.sardine.impl.io.ConsumingInputStream;
 import com.github.sardine.impl.io.ContentLengthInputStream;
 import com.github.sardine.impl.methods.HttpAcl;
@@ -839,7 +836,13 @@ public class SardineImpl implements Sardine
 		return this.execute(head, new ExistsResponseHandler());
 	}
 
-	/**
+    @Override
+    public long getContentLength(String url) throws IOException {
+        HttpHead head = new HttpHead(url);
+        return this.execute(head, new ContentLengthResponseHandler());
+    }
+
+    /**
 	 * Validate the response using the response handler. Aborts the request if there is an exception.
 	 *
 	 * @param <T>             Return type
